@@ -6,7 +6,7 @@ set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 #set the default path for built libraries to the "lib" directory
 set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 
-# To uncomment in the futute
+# To uncomment in the future
 # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --std=gnu++11")
 
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake_modules)
@@ -24,21 +24,38 @@ endif ()
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED)
 
-## System dependencies are found with CMake's conventions
-# find_package(Boost REQUIRED COMPONENTS system)
-
-# Find OpenGL
-find_package(OpenGL REQUIRED)
-include_directories(${OPENGL_INCLUDE})
-
-# Find QGLViewer
+#ds find QGLViewer: generic support for qt4/5
 find_package(QGLViewer REQUIRED)
 include_directories(${QGLVIEWER_INCLUDE_DIR})
 
-# Find Qt4
-find_package(Qt4 REQUIRED)
-include_directories(${QT_INCLUDES})
+#ds check if qt5 is available - lock variable to false if qt4 should be used
+find_package(Qt5Widgets)
+if(${Qt5Widgets_FOUND})
+  message("using Qt 5")
+  set(SRRG_CORE_VIEWERS_USE_QT_5 true)
+else()
+  message("using Qt 4")
+  set(SRRG_CORE_VIEWERS_USE_QT_5 false)
+endif()
 
+#ds if we found a valid qt5 installation
+if(${SRRG_CORE_VIEWERS_USE_QT_5})
+
+  #ds load package information to cmake
+  find_package(Qt5 COMPONENTS Xml OpenGL Widgets REQUIRED)
+  include_directories(
+    ${Qt5Xml_INCLUDE_DIRS}
+    ${Qt5OpenGL_INCLUDE_DIRS}
+    ${Qt5Widgets_INCLUDE_DIRS}
+  )
+  
+else()
+
+  #ds fallback to qt4
+  find_package(Qt4 REQUIRED)
+  include_directories(${QT_INCLUDES})
+  
+endif()
 
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed

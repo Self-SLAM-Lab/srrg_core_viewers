@@ -35,26 +35,9 @@ namespace srrg_core_viewers {
     bool _standard;
   };
 
-
-  QKeyEvent* SimpleViewer::lastKeyEvent() {
-    if (_last_key_event_processed)
-      return 0;
-    return &_last_key_event;
-  }
-  
-  void SimpleViewer::keyEventProcessed() {
-    _last_key_event_processed = true;
-  }
-  SimpleViewer::SimpleViewer() :
-    _last_key_event(QEvent::None, 0, Qt::NoModifier){
-    _last_key_event_processed = true;
-  }
-
-  void SimpleViewer::keyPressEvent(QKeyEvent *e) {
-    QGLViewer::keyPressEvent(e);
-      _last_key_event = *e;
-      _last_key_event_processed=false;
-  }
+  SimpleViewer::SimpleViewer(QWidget* parent): QGLViewer(parent),
+                                               _last_key_event(QEvent::None, 0, Qt::NoModifier),
+                                               _last_key_event_processed(true) {}
 
   void SimpleViewer::init() {
     // Init QGLViewer.
@@ -93,5 +76,19 @@ namespace srrg_core_viewers {
 
   }
 
-}
+  void SimpleViewer::keyPressEvent(QKeyEvent *e) {
+    QGLViewer::keyPressEvent(e);
+      _last_key_event = *e;
+      _last_key_event_processed=false;
+  }
 
+  QKeyEvent* SimpleViewer::lastKeyEvent() {
+    if (_last_key_event_processed)
+      return 0;
+    return &_last_key_event;
+  }
+
+  void SimpleViewer::keyEventProcessed() {
+    _last_key_event_processed = true;
+  }
+}
