@@ -31,11 +31,24 @@ include_directories(${QGLVIEWER_INCLUDE_DIR})
 #ds check if qt5 is available - lock variable to false if qt4 should be used
 find_package(Qt5Widgets)
 if(${Qt5Widgets_FOUND})
-  message("using Qt 5")
-  set(SRRG_CORE_VIEWERS_USE_QT_5 true)
+
+  #ds only enable qt5 if ros kinetic is present
+  if("$ENV{ROS_DISTRO}" STREQUAL "kinetic")
+
+    message("using Qt 5")
+    set(SRRG_GSLAM_USE_QT_5 true)
+
+  else()
+
+    message("using Qt 4")
+    set(SRRG_GSLAM_USE_QT_5 false)
+
+  endif()
 else()
+
   message("using Qt 4")
-  set(SRRG_CORE_VIEWERS_USE_QT_5 false)
+  set(SRRG_GSLAM_USE_QT_5 false)
+
 endif()
 
 #ds if we found a valid qt5 installation
