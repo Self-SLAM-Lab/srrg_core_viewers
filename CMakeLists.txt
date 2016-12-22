@@ -36,18 +36,18 @@ if(${Qt5Widgets_FOUND})
   if("$ENV{ROS_DISTRO}" STREQUAL "kinetic")
 
     message("using Qt 5")
-    set(SRRG_GSLAM_USE_QT_5 true)
+    set(SRRG_CORE_VIEWERS_USE_QT_5 true)
 
   else()
 
     message("using Qt 4")
-    set(SRRG_GSLAM_USE_QT_5 false)
+    set(SRRG_CORE_VIEWERS_USE_QT_5 false)
 
   endif()
 else()
 
   message("using Qt 4")
-  set(SRRG_GSLAM_USE_QT_5 false)
+  set(SRRG_CORE_VIEWERS_USE_QT_5 false)
 
 endif()
 
