@@ -69,9 +69,9 @@ namespace srrg_core_viewers {
     qglviewer::Camera *oldcam = camera();
     qglviewer::Camera *cam = new StandardCamera();
     setCamera(cam);
-    cam->setPosition(qglviewer::Vec(0.0f, 0.0f, 0.0f));
-    cam->setUpVector(qglviewer::Vec(0.0f, -1.0f, 0.0f));
-    cam->lookAt(qglviewer::Vec(0.0f, 0.0f, 1.0f));
+    cam->setPosition(qglviewer::Vec(0.0f, 0.0f, 10.0f));
+    cam->setUpVector(qglviewer::Vec(1.0f, 0.0f, 0.0f));
+    cam->lookAt(qglviewer::Vec(0.0f, 0.0f, 0.0f));
     delete oldcam;
 
   }
