@@ -29,38 +29,7 @@ find_package(catkin REQUIRED)
 #ds find QGLViewer: generic support for qt4/5
 find_package(QGLViewer REQUIRED)
 include_directories(${QGLVIEWER_INCLUDE_DIR})
-
-#ds check if qt5 is available - lock variable to false if qt4 should be used
-set(SRRG_CORE_VIEWERS_USE_QT_5 false)
-find_package(Qt5Widgets)
-if(${Qt5Widgets_FOUND})
-
-  #ds only enable qt5 if ros kinetic is present
-  if("$ENV{ROS_DISTRO}" STREQUAL "kinetic")
-    set(SRRG_CORE_VIEWERS_USE_QT_5 true)
-  endif()
-endif()
-
-#ds if we found a valid qt5 installation
-if(${SRRG_CORE_VIEWERS_USE_QT_5})
-
-  #ds load package information to cmake
-  message("using Qt 5")
-  find_package(Qt5 COMPONENTS Xml OpenGL Widgets REQUIRED)
-  include_directories(
-    ${Qt5Xml_INCLUDE_DIRS}
-    ${Qt5OpenGL_INCLUDE_DIRS}
-    ${Qt5Widgets_INCLUDE_DIRS}
-  )
-  
-else()
-
-  #ds fallback to qt4
-  message("using Qt 4")
-  find_package(Qt4 REQUIRED)
-  include_directories(${QT_INCLUDES})
-  
-endif()
+include_directories(${QT_INCLUDE_DIRS})
 
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
