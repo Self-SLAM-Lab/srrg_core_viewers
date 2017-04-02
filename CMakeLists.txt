@@ -29,7 +29,7 @@ find_package(catkin REQUIRED)
 #ds find QGLViewer: generic support for qt4/5
 find_package(QGLViewer REQUIRED)
 include_directories(${QGLVIEWER_INCLUDE_DIR})
-include_directories(${QT_INCLUDE_DIRS})
+include_directories(${SRRG_QT_INCLUDE_DIRS})
 
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
