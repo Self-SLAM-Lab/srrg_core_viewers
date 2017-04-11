@@ -44,11 +44,12 @@ namespace srrg_core_viewers {
     QGLViewer::init();
     // Set background color light yellow.
     // setBackgroundColor(QColor::fromRgb(255, 255, 194));
-
+    glClearColor (1,1,1,1) ;
+    glClear ( GL_COLOR_BUFFER_BIT ) ;
     
     // Set background color white.
-    setBackgroundColor(QColor::fromRgb(255, 255, 255));
-
+    //    setBackgroundColor(QColor::fromRgb(255, 255, 255));
+    
     // Set some default settings.
     glEnable(GL_LINE_SMOOTH);
     glEnable(GL_BLEND); 
