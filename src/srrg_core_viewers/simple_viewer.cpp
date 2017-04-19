@@ -47,8 +47,8 @@ namespace srrg_core_viewers {
 
     
     // Set background color white.
-    setBackgroundColor(QColor::fromRgb(255, 255, 255));
-
+    //setBackgroundColor(QColor::fromRgb(255, 255, 255));
+    glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
     // Set some default settings.
     glEnable(GL_LINE_SMOOTH);
     glEnable(GL_BLEND); 
