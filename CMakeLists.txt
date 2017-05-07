@@ -24,7 +24,23 @@ endif ()
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED)
+find_package(catkin REQUIRED
+  srrg_core
+  srrg_boss
+  srrg_gl_helpers
+  )
+
+## System dependencies are found with CMake's conventions
+find_package(Boost REQUIRED COMPONENTS system)
+
+# Find Eigen3
+find_package(Eigen3 REQUIRED)
+include_directories(${EIGEN3_INCLUDE_DIR})
+
+find_package(OpenCV REQUIRED)
+message(STATUS "${PROJECT_NAME}: OpenCV version ${OpenCV_VERSION}")
+include_directories(${OpenCV_INCLUDE_DIRS})
+message(STATUS "OpenCV_INCLUDE_DIRS: ${OpenCV_INCLUDE_DIRS}")
 
 #ds find QGLViewer: generic support for qt4/5
 find_package(QGLViewer REQUIRED)
@@ -119,7 +135,7 @@ include_directories(${SRRG_QT_INCLUDE_DIRS})
 catkin_package(
   INCLUDE_DIRS src
   LIBRARIES srrg_core_viewers_library
-#  CATKIN_DEPENDS other_catkin_pkg
+  CATKIN_DEPENDS srrg_boss srrg_gl_helpers srrg_core
 #  DEPENDS system_lib
 )
 

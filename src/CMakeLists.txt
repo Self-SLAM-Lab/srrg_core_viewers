@@ -1,1 +1,2 @@
 add_subdirectory(srrg_core_viewers)
+add_subdirectory(apps)
