@@ -31,7 +31,7 @@ const char* banner[] = {
 };
 
 int main(int argc, char** argv) {
-  std::list<Cloud*> clouds;
+  std::list<Cloud3D*> clouds;
   if(argc < 2 || !strcmp(argv[1], "-h")) { 
     printBanner(banner);
     return 0;
@@ -39,7 +39,7 @@ int main(int argc, char** argv) {
 
   int c = 1;
   while(c < argc) {
-    Cloud* cloud = new Cloud;
+    Cloud3D* cloud = new Cloud3D;
     ifstream is(argv[c]);
     cloud->read(is);
     clouds.push_back(cloud);
@@ -48,14 +48,14 @@ int main(int argc, char** argv) {
   }
   
   QApplication app(argc, argv);
-  CloudViewer viewer;
-  for(std::list<Cloud*>::iterator it = clouds.begin(); it != clouds.end(); ++it) {
+  Cloud3DViewer viewer;
+  for(std::list<Cloud3D*>::iterator it = clouds.begin(); it != clouds.end(); ++it) {
     viewer.addCloud(*it);
   }  
   viewer.show();
   app.exec();
 
-  for(std::list<Cloud*>::iterator it = clouds.begin(); it != clouds.end(); ++it) {
+  for(std::list<Cloud3D*>::iterator it = clouds.begin(); it != clouds.end(); ++it) {
     delete *it;
   }  
   
