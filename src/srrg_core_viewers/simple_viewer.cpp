@@ -62,8 +62,8 @@ namespace srrg_core_viewers {
     setStateFileName(QString::null);
 
     // Mouse bindings.
-    setMouseBinding(Qt::RightButton, CAMERA, ZOOM);
-    setMouseBinding(Qt::MidButton, CAMERA, TRANSLATE);
+    setMouseBinding(Qt::NoModifier, Qt::RightButton, CAMERA, ZOOM);
+    setMouseBinding(Qt::NoModifier, Qt::MidButton, CAMERA, TRANSLATE);
     setMouseBinding(Qt::ControlModifier, Qt::LeftButton, RAP_FROM_PIXEL);
 
     // Replace camera.
