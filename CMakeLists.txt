@@ -30,9 +30,6 @@ find_package(catkin REQUIRED
   srrg_gl_helpers
   )
 
-## System dependencies are found with CMake's conventions
-find_package(Boost REQUIRED COMPONENTS system)
-
 # Find Eigen3
 find_package(Eigen3 REQUIRED)
 include_directories(${EIGEN3_INCLUDE_DIR})
