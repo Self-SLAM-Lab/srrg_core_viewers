@@ -26,7 +26,6 @@ endif ()
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED
   srrg_core
-  srrg_boss
   srrg_gl_helpers
   )
 
@@ -132,7 +131,7 @@ include_directories(${SRRG_QT_INCLUDE_DIRS})
 catkin_package(
   INCLUDE_DIRS src
   LIBRARIES srrg_core_viewers_library
-  CATKIN_DEPENDS srrg_boss srrg_gl_helpers srrg_core
+  CATKIN_DEPENDS srrg_gl_helpers srrg_core
 #  DEPENDS system_lib
 )
 
