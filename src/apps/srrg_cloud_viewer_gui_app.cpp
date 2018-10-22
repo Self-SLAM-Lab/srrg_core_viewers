@@ -1,26 +1,10 @@
 #include <iostream>
-#include <fstream>
-#include <limits>
-#include <deque>
-#include <queue>
-#include <vector>
-
-#include <Eigen/Core>
-
-#include <opencv/cv.h>
-#include <opencv/highgui.h>
-
 #include <qapplication.h>
-#include <qglviewer.h>
 
-#include <srrg_system_utils/system_utils.h>
+#include "srrg_system_utils/system_utils.h"
 #include "srrg_core_viewers/cloud_viewer.h"
 
-using namespace std;
-using namespace Eigen;
-using namespace srrg_core;
-using namespace srrg_core;
-using namespace srrg_core_viewers;
+
 
 const char* banner[] = {
   "srrg_cloud_viewer_gui_app",
@@ -31,31 +15,31 @@ const char* banner[] = {
 };
 
 int main(int argc, char** argv) {
-  std::list<Cloud3D*> clouds;
+  std::list<srrg_core::Cloud3D*> clouds;
   if(argc < 2 || !strcmp(argv[1], "-h")) { 
-    printBanner(banner);
+    srrg_core::printBanner(banner);
     return 0;
   }
 
   int c = 1;
   while(c < argc) {
-    Cloud3D* cloud = new Cloud3D;
-    ifstream is(argv[c]);
+    srrg_core::Cloud3D* cloud = new srrg_core::Cloud3D;
+    std::ifstream is(argv[c]);
     cloud->read(is);
     clouds.push_back(cloud);
-    cerr << "loaded cloud [" << argv[c] << "] with " << cloud->size() << "] points" << endl;
+    std::cerr << "loaded cloud [" << argv[c] << "] with " << cloud->size() << "] points" << std::endl;
     c++;
   }
   
   QApplication app(argc, argv);
-  Cloud3DViewer viewer;
-  for(std::list<Cloud3D*>::iterator it = clouds.begin(); it != clouds.end(); ++it) {
+  srrg_core_viewers::Cloud3DViewer viewer;
+  for(std::list<srrg_core::Cloud3D*>::iterator it = clouds.begin(); it != clouds.end(); ++it) {
     viewer.addCloud(*it);
   }  
   viewer.show();
   app.exec();
 
-  for(std::list<Cloud3D*>::iterator it = clouds.begin(); it != clouds.end(); ++it) {
+  for(std::list<srrg_core::Cloud3D*>::iterator it = clouds.begin(); it != clouds.end(); ++it) {
     delete *it;
   }  
   
