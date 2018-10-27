@@ -14,29 +14,51 @@ set(CMAKE_MODULE_PATH ${srrg_cmake_modules_INCLUDE_DIRS})
 
 set(CMAKE_BUILD_TYPE Release)
 
-message(STATUS "PROCESSOR_TYPE: [${CMAKE_HOST_SYSTEM_PROCESSOR}]")
+message("${PROJECT_NAME}|PROCESSOR_TYPE: [${CMAKE_HOST_SYSTEM_PROCESSOR}]")
 if (${CMAKE_HOST_SYSTEM_PROCESSOR} MATCHES armv7l)
   set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -march=armv7-a -mfpu=neon-vfpv4 -mfloat-abi=hard -funsafe-math-optimizations")
   set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=armv7-a -mfpu=neon-vfpv4 -mfloat-abi=hard -funsafe-math-optimizations")
-  message("ENABLING ARM NEON OPTIMIZATIONS")
+  message("${PROJECT_NAME}|ENABLING ARM NEON OPTIMIZATIONS")
 endif ()
-
-## Find catkin macros and libraries
-## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
-## is used, also find other catkin packages
-find_package(catkin REQUIRED
-  srrg_core
-  srrg_gl_helpers
-  )
 
 # Find Eigen3
 find_package(Eigen3 REQUIRED)
 include_directories(${EIGEN3_INCLUDE_DIR})
 
-find_package(OpenCV REQUIRED)
-message(STATUS "${PROJECT_NAME}: OpenCV version ${OpenCV_VERSION}")
+#ds before looking for OpenCV - check if a supported ros version is installed - in that case we will use that OpenCV version
+if("$ENV{ROS_DISTRO}" STREQUAL "kinetic" OR "$ENV{ROS_DISTRO}" STREQUAL "indigo" OR "$ENV{ROS_DISTRO}" STREQUAL "melodic")
+  message("${PROJECT_NAME}|found ROS version: '$ENV{ROS_DISTRO}' linking against ROS OpenCV")
+  
+  #ds load opencv through ROS
+  find_package(catkin REQUIRED COMPONENTS
+    srrg_core
+	srrg_gl_helpers
+    cv_bridge
+    image_geometry
+  )
+  set(OpenCV_LIBS ${catkin_LIBRARIES})
+else()
+
+  ## Find catkin macros and libraries
+  ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
+  ## is used, also find other catkin packages
+  find_package(catkin REQUIRED
+	srrg_core
+	srrg_gl_helpers
+  )
+
+  #ds look for a separately installed opencv library
+  find_package(OpenCV REQUIRED)
+endif()
 include_directories(${OpenCV_INCLUDE_DIRS})
-message(STATUS "OpenCV_INCLUDE_DIRS: ${OpenCV_INCLUDE_DIRS}")
+message("${PROJECT_NAME}|OpenCV version ${OpenCV_VERSION}")
+
+#ds check if we have contributed features in opencv (optional)
+string(FIND "${OpenCV_LIBS}" "xfeatures2d" FOUND_OPENCV_CONTRIB)
+if(NOT ${FOUND_OPENCV_CONTRIB} EQUAL -1)
+  message("${PROJECT_NAME}|found xfeatures2d library, building contributed OpenCV components")
+  add_definitions(-DSRRG_CORE_HAS_OPENCV_CONTRIB)
+endif()
 
 #ds find QGLViewer: generic support for qt4/5
 find_package(QGLViewer REQUIRED)
