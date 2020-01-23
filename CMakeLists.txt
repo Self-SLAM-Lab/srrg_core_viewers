@@ -240,3 +240,5 @@ add_subdirectory(${PROJECT_SOURCE_DIR}/src)
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
+
+message("${PROJECT_NAME}|compiling with these flags [ ${CMAKE_CXX_FLAGS} ]")
