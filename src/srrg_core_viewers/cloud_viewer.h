@@ -11,7 +11,7 @@ namespace srrg_core_viewers {
   public:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
     typedef std::map<const srrg_core::Cloud3D*, Eigen::Isometry3f, std::less<const srrg_core::Cloud3D*>,
-		     Eigen::aligned_allocator<std::pair<const srrg_core::Cloud3D*, Eigen::Isometry3f> > > CloudIsometryMap;
+		     Eigen::aligned_allocator<std::pair<const srrg_core::Cloud3D* const, Eigen::Isometry3f> > > CloudIsometryMap;
     Cloud3DViewer();
     enum Mode {MoveCamera=0x0, MoveObject=0x1};
 
